@@ -21,7 +21,7 @@
 * **Recall: catch as many as possible**
 * F1: balance between precision and recall
 * Accuracy: when classes are balanced
-* RROC AUC: good for comparing models (taking all into account)
+* ROC AUC: good for comparing models (taking all into account)
 * Log loss: when want to penalize for being really far off
 
 
