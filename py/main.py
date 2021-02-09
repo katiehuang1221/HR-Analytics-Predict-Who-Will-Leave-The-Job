@@ -4,7 +4,7 @@ import numpy as np
 import altair as alt
 import matplotlib.pyplot as plt
 import seaborn as sns
-# sns.set()
+sns.set()
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures, OneHotEncoder
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
@@ -305,7 +305,7 @@ with dataset:
         ]
 
     # Save the df
-    df_train_filtered.to_csv('../dump/df_train_customized')
+    # df_train_filtered.to_csv('../dump/df_train_customized')
 
     df_train_filtered_display=df_train_filtered[['enrollee_id','gender', 'major_discipline',  'education_level',
         'city_development_index', 'company_type', 'company_size',
@@ -423,7 +423,7 @@ with model_training:
 
     st.markdown('### Customize Metric')
     option = st.selectbox('Select the metric you wish to use:',
-            ('Recall','Threshold','Number of candidates'))
+            ('Recall','Threshold','Number of candidates'),index=1)
 
     if option == 'Threshold':
 
