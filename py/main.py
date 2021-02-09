@@ -1,14 +1,16 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set()
+# sns.set()
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures, OneHotEncoder
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn.metrics import roc_curve, auc, roc_auc_score
 from sklearn.metrics import precision_score, recall_score, precision_recall_curve,f1_score, fbeta_score, log_loss
+
 
 
 
@@ -22,6 +24,14 @@ with header:
     st.title('Welcome to Smart HR!')
     st.write('Tell me about the candidates and I will let you know if they are actually looking for a new job!\
     This will save you considerable amount of time reaching out or interviewing the candidates!')
+
+    df_temp = pd.read_csv('../dump/df_test_altair_viz.csv')
+    c = alt.Chart(df_temp.iloc[:200]).mark_circle().encode(
+    x=alt.X('Candidate',axis=alt.Axis(labels=False)), y='Training Hours', size='Probability', color='Current company',
+    tooltip=['Probability', 'Candidate ID', 'Gender', 'Major', 'Education',
+             'Training Hours', 'Experience (yr)']).properties(width=700, height=250)
+    st.write(c) 
+
 
 st.sidebar.header('Info of Candidates')
 
@@ -70,7 +80,7 @@ if specify == 'Specify':
 
     
 
-
+    st.sidebar.header('')    
     if st.sidebar.checkbox('Major',key='major'):
         option = st.sidebar.selectbox('Select major',
         ('All','Specify'))
@@ -101,7 +111,7 @@ if specify == 'Specify':
                 major_filter.append('unknown')
 
 
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Education Level',key='education_level'):
         option = st.sidebar.selectbox('Select education level',
         ('All','Specify'))
@@ -128,12 +138,13 @@ if specify == 'Specify':
             if secret:
                 education_filter.append('unknown')
 
+    st.sidebar.header('')
     if st.sidebar.checkbox('Current City (City Development Index)',key='city_development_index'):
         x = st.sidebar.slider('Select a range of training hours',
         0.5,1.0,(0.6, 0.8))  # 👈 this is a widget
         city_filter[0],city_filter[1] = x
         
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Current company type',key='company_type'):
         option = st.sidebar.selectbox('Select current company type',
         ('All','Specify'))
@@ -165,7 +176,7 @@ if specify == 'Specify':
 
 
 
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Current company size',key='company_size'):
         option = st.sidebar.selectbox('Select current company size',
         ('All','Specify'))
@@ -227,14 +238,14 @@ if specify == 'Specify':
 
 
 
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Training Hours',key='training_hours'):
         x = st.sidebar.slider('Select a range of training hours',
         0,500,(24, 100))  # 👈 this is a widget
         training_hours_filter[0],training_hours_filter[1] = x
         # st.write(training_hours_filter_min)
 
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Relevant Experience',key='relevant_experience'):
         option = st.sidebar.selectbox('Select relevant experience',
         ('Yes','No','All'))
@@ -249,15 +260,18 @@ if specify == 'Specify':
 
 
 
-
+    st.sidebar.header('')
     if st.sidebar.checkbox('Experience (years)',key='experience'):
         x = st.sidebar.sidebar.slider('Select a range of experience (in years)',
         0,25,(5, 10))  # 👈 this is a widget
         experience_filter[0], experience_filter[1] = x
         # st.write(training_hours_filter_min)
 
+
+
 with dataset:
-    st.header('Candidate Dataset')
+    st.header('Candidate Statistics')
+   
 
     df_train = pd.read_pickle('../dump/df_train.csv')
     df_test = pd.read_pickle('../dump/df_test.csv')
@@ -267,262 +281,12 @@ with dataset:
     X_test = pd.read_pickle('../dump/X_test_processed')
     y_test = df_test['target']
 
-    if st.checkbox('Show dataframe'):
-        st.write(X_train.head())
 
-    target_dist = pd.DataFrame(df_train['target'].value_counts());
-    st.bar_chart(target_dist)
+    # st.write('Total number of candidates',df_train_viz.shape[0])
 
-    fig, ax = plt.subplots()
-    ax.hist((df_train['target']));
-    st.pyplot(fig)
+    # if st.checkbox('Show dataframe'):
+    #     st.write(df_train_viz.head())
 
-    arr = np.random.normal(1, 1, size=100)
-    fig, ax = plt.subplots()
-    ax.hist(arr, bins=20)
-    st.pyplot(fig)
-
-    chart_data = pd.DataFrame(
-    np.random.randn(50, 3),
-    columns=["a", "b", "c"])
-    st.bar_chart(chart_data)
-
-# with features:
-#     st.header('Info of Candidates')
-
-#     st.markdown('### Select the feature(s) you want to use for filtering!')
-
-#     specify = st.selectbox('Features',
-#     ('All','Specify'))
-
-#     if specify == 'Specify':
-
-
-#         # Set default values
-#         gender_filter=['Female','Male','Other','unknown']
-#         major_filter=['STEM','Humanities','Business Degree','Arts','No major','Other','unknown']
-#         education_filter=['Primary School','High School','Graduate','Masters','Phd','unknown']
-#         city_filter=[0.5,1]
-#         company_type_filter=['Pvt Ltd','unknown','Funded Startup','Public Sector','Early Stage Startup','NGO','Other']
-#         company_size_filter=['50-99', '<10', '10000+', '5000-9999', '1000-4999', '10/49','100-500', '500-999']
-#         enrolled_university_filter=['no_enrollment', 'Full time course', 'unknown', 'Part time course']
-#         training_hours_filter=[0,500]
-#         relevant_experience_filter=['Has relevent experience', 'No relevent experience']
-#         experience_filter =[0,25]
-
-
-#         st.markdown('### Current status')
-
-#         if st.checkbox('Gender',key='gender'):
-#             option = st.selectbox('Select gender',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 Female = st.checkbox('Female',key='female')
-#                 Male = st.checkbox('Male',key='male')
-#                 Other = st.checkbox('Other',key='gender_other')
-#                 secret = st.checkbox('Secret',key='gender_secret')
-
-#                 gender_filter=[]
-#                 if Female:
-#                     gender_filter.append('Female')
-#                 if Male:
-#                     gender_filter.append('Male')
-#                 if Other:
-#                     gender_filter.append('Other')
-#                 if secret:
-#                     gender_filter.append('unknown')
-
-        
-
-
-#         if st.checkbox('Major',key='major'):
-#             option = st.selectbox('Select major',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 STEM = st.checkbox('STEM',key='STEM')
-#                 Humanities = st.checkbox('Humanities',key='Humanities')
-#                 Business = st.checkbox('Business',key='Business')
-#                 Arts = st.checkbox('Arts',key='Arts')
-#                 Other = st.checkbox('Other',key='major_other')
-#                 No = st.checkbox('No major',key='major_none')
-#                 secret = st.checkbox('Secret',key='major_secret')
-
-#                 major_filter=[]
-#                 if STEM:
-#                     major_filter.append('STEM')
-#                 if Humanities:
-#                     major_filter.append('Humanities')
-#                 if Business:
-#                     major_filter.append('Business Degree')
-#                 if Arts:
-#                     major_filter.append('Arts')
-#                 if No:
-#                     major_filter.append('No major')
-#                 if Other:
-#                     major_filter.append('Other')
-#                 if secret:
-#                     major_filter.append('unknown')
-
-
-
-#         if st.checkbox('Education Level',key='education_level'):
-#             option = st.selectbox('Select education level',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 PM = st.checkbox('Primary School',key='PM')
-#                 HS = st.checkbox('High School',key='HS')
-#                 Graduate = st.checkbox('Graduate',key='Graduate')
-#                 Master = st.checkbox('Master',key='Master')
-#                 PhD = st.checkbox('PhD',key='PhD')
-#                 secret = st.checkbox('Secret',key='education_secret')
-
-#                 education_filter=[]
-#                 if PM:
-#                     education_filter.append('Primary School')
-#                 if HS:
-#                     education_filter.append('High School')
-#                 if Graduate:
-#                     education_filter.append('Graduate')
-#                 if Master:
-#                     education_filter.append('Masters')
-#                 if PhD:
-#                     education_filter.append('Phd')
-#                 if secret:
-#                     education_filter.append('unknown')
-
-#         if st.checkbox('Current City (City Development Index)',key='city_development_index'):
-#             x = st.slider('Select a range of training hours',
-#             0.5,1.0,(0.6, 0.8))  # 👈 this is a widget
-#             city_filter[0],city_filter[1] = x
-            
-
-#         if st.checkbox('Current company type',key='company_type'):
-#             option = st.selectbox('Select current company type',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 ESS = st.checkbox('Early Stage Startup',key='ESS')
-#                 FS = st.checkbox('Funded Startup',key='FS')
-#                 NGO = st.checkbox('NGO',key='NGO')
-#                 PS = st.checkbox('Public Sector',key='PS')
-#                 Pvt = st.checkbox('Pvt Ltd',key='Pvt')
-#                 Other = st.checkbox('Other',key='company_type_Other')
-#                 secret = st.checkbox('Secret',key='company_type_secret')
-
-#                 company_type_filter=[]
-#                 if ESS:
-#                     company_type_filter.append('Early Stage Startup')
-#                 if FS:
-#                     company_type_filter.append('Funded Startup')
-#                 if NGO:
-#                     company_type_filter.append('NGO')
-#                 if PS:
-#                     company_type_filter.append('Public Sector')
-#                 if Pvt:
-#                     company_type_filter.append('Pvt Ltd')
-#                 if Other:
-#                     company_type_filter.append('Other')    
-#                 if secret:
-#                     company_type_filter.append('unknown')
-
-
-
-
-#         if st.checkbox('Current company size',key='company_size'):
-#             option = st.selectbox('Select current company size',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 a = st.checkbox('<10',key='a')
-#                 b = st.checkbox('10-49',key='b')
-#                 c = st.checkbox('50-99',key='c')
-#                 d = st.checkbox('100-499',key='d')
-#                 e = st.checkbox('500-999',key='e')
-#                 f = st.checkbox('1000-4999',key='f')
-#                 g = st.checkbox('5000-9999',key='g')
-#                 h = st.checkbox('10000+',key='h')
-#                 secret = st.checkbox('Secret',key='company_size_secret')
-
-#                 company_size_filter=[]
-#                 if a:
-#                     company_size_filter.append('<10')
-#                 if b:
-#                     company_size_filter.append('10/49')
-#                 if c:
-#                     company_size_filter.append('50-99')
-#                 if d:
-#                     company_size_filter.append('100-500')
-#                 if e:
-#                     company_size_filter.append('500-999')
-#                 if f:
-#                     company_size_filter.append('1000-4999')
-#                 if g:
-#                     company_size_filter.append('5000-9999')
-#                 if h:
-#                     company_size_filter.append('10000+')      
-#                 if secret:
-#                     company_size_filter.append('unknown')
-
-
-
-#         st.markdown('### Training')
-
-#         if st.checkbox('Enrolled Course',key='enrolled_university'):
-#             option = st.selectbox('Select enrolled course',
-#             ('All','Specify'))
-
-#             if option == 'Specify':
-#                 full_time = st.checkbox('Full time',key='full_time')
-#                 part_time = st.checkbox('Part time',key='part_time')
-#                 no_enrollment = st.checkbox('No enrollment',key='no_enrollment')
-#                 unknown = st.checkbox('Unknown',key='unknown_enrollment')
-
-#                 enrolled_university_filter=[]
-#                 if full_time:
-#                     enrolled_university_filter.append('Full time course')
-#                 if part_time:
-#                     enrolled_university_filter.append('Part time course')
-#                 if no_enrollment:
-#                     enrolled_university_filter.append('no_enrollment')
-#                 if unknown:
-#                     enrolled_university_filter.append('unknown')
-
-
-
-
-#         if st.checkbox('Training Hours',key='training_hours'):
-#             x = st.slider('Select a range of training hours',
-#             0,500,(24, 100))  # 👈 this is a widget
-#             training_hours_filter[0],training_hours_filter[1] = x
-#             # st.write(training_hours_filter_min)
-
-
-#         if st.checkbox('Relevant Experience',key='relevant_experience'):
-#             option = st.selectbox('Select relevant experience',
-#             ('Yes','No','All'))
-
-#             relevant_experience_filter=[]
-#             if option == 'All':
-#                 relevant_experience_filter=['Has relevent experience', 'No relevent experience']
-#             if option == 'Yes':
-#                 relevant_experience_filter=['Has relevent experience']
-#             if option == 'No':
-#                 relevant_experience_filter=['No relevent experience']
-
-
-
-
-#         if st.checkbox('Experience (years)',key='experience'):
-#             x = st.slider('Select a range of experience (in years)',
-#             0,25,(5, 10))  # 👈 this is a widget
-#             experience_filter[0], experience_filter[1] = x
-#             # st.write(training_hours_filter_min)
-
-
-    # Create filter df_train
     if specify == 'All':
         df_train_filtered = df_train
 
@@ -545,42 +309,55 @@ with dataset:
 
     df_train_filtered_display=df_train_filtered[['enrollee_id','gender', 'major_discipline',  'education_level',
         'city_development_index', 'company_type', 'company_size',
-        'enrolled_university', 'training_hours', 'relevent_experience', 'experience']]
+        'enrolled_university', 'training_hours', 'relevent_experience', 'experience','target']]
 
 
-    df_train_filtered_display.columns=['Enrollee ID', 'Gender', 'Major',  'Education Level',
+    
+    df_train_viz = df_train_filtered_display.copy()
+    df_train_viz['target'] = df_train_viz['target'].apply(lambda x: 'Yes' if x==1 else 'No')
+    df_train_viz['enrolled_university'] = \
+        df_train_viz['enrolled_university'].map({'Full time course':'Full time',\
+                                                 'Part time course':'Part time',\
+                                                 'no_enrollment':'No enrollment',\
+                                                 'unknown':'unknown'
+                                                })
+    df_train_viz['major_discipline'] = df_train_viz['major_discipline'].\
+                                        replace('Business Degree','Business')
+    df_train_viz['relevent_experience'] = df_train_viz['relevent_experience'].\
+                                        map({'Has relevent experience':'Yes',\
+                                                                              'No relevent experience':'No'})
+    target_count = pd.DataFrame(df_train_viz['target'].value_counts())
+    yes_count = target_count.target[1]
+    no_count = target_count.target[0]
+
+    df_train_viz.columns=['Enrollee ID', 'Gender', 'Major',  'Education Level',
         'Current City', 'Current Company Type', 'Current Company Size',
-        'Enrolled Course', 'Training Hours', 'Relevant Experience', 'Experience (years)']
+        'Enrolled Course', 'Training Hours', 'Relevant Experience', 'Experience (years)','Target']
 
-    st.markdown('### Here are the filtered candidates:')
-    st.write('Qualified candidate count:',df_train_filtered.shape[0])
+
+    # st.markdown('### Here are the filtered candidates:')
+    st.write('Qualified candidate count:',df_train_viz.shape[0])
     if st.checkbox('Show dataframe',key='filtered'):
-            st.write(df_train_filtered_display)        
+            st.write(df_train_viz)        
+
     
 
-
-
-
-    # st.write(df_train[(df_train.training_hours > training_hours_filter_min) & 
-    # (df_train.training_hours < training_hours_filter_max)].head())
-
+    source = pd.DataFrame({
+    'Looking for a new job?': ['Yes', 'No'],
+    'Count': [yes_count, no_count]
+    })
+    c = alt.Chart(source).mark_bar().encode(
+    x='Looking for a new job?',
+    y='Count', tooltip=['Count']
+    ).configure_axisX(labelAngle=0).configure_axis(labelFontSize=20,titleFontSize=20)\
+    .properties(width=600, height=400)
+    st.altair_chart(c)
 
 
 
 
 with model_training:
     st.header('Model')
-    # st.markdown('### Evaluation on test data:')
-
-    
-
-    # sel_col, disp_col = st.beta_columns(2)
-
-    # max_depth = sel_col.slider('What should be the max_depth of the model?', min_value=10, max_value=100, value=20, step=10)
-    # n_estimators = sel_col.selectbox('How many trees should there be?', options=[100,200,300,'No limit'],index=0)
-    # input_feature = sel_col.text_input('Which feature should be used as the input feature?', 'Major')
-
-
 
     # Training data
     df_test = pd.read_pickle('../dump/df_test.csv')
@@ -600,17 +377,9 @@ with model_training:
     
     st.subheader('Overall Performance')
     # st.write('Accuracy:', accuracy)
-    st.write('ROC AUC:', AUC)
-
-
-    # disp_col.subheader('Accuracy')
-    # disp_col.write(accuracy)
-    # disp_col.subheader('Recall')
-    # disp_col.write(recall)
-    # disp_col.subheader('Precision')
-    # disp_col.write(precision)
-    # st.subheader('ROC AUC score')
-    # st.write(AUC)
+    col1,col2 = st.beta_columns([1,2])
+    col1.markdown('### ROC AUC \n (on unseen test data)')
+    col2.title(AUC)
     
     
     
@@ -831,80 +600,5 @@ with takeaway:
     st.write(final[['Enrollee ID', 'Probability (%)','Gender', 'Major',  'Education Level',
         'Current City', 'Current Company Type', 'Current Company Size',
         'Enrolled Course', 'Training Hours', 'Relevant Experience', 'Experience (years)']].\
-            sort_values('Probability (%)',ascending=False).reset_index())
+            sort_values('Probability (%)',ascending=False).reset_index(drop=True))
 
-
-
-
-
-
-
-
-
-
-# """
-# # My first app
-# Here's our first attempt at using data to create a table:
-# """
-
-# df = pd.DataFrame({
-#   'first column': [1, 2, 3, 4],
-#   'second column': [10, 20, 30, 40]
-# })
-
-# df
-
-# chart_data = pd.DataFrame(
-#      np.random.randn(20, 3),
-#      columns=['a', 'b', 'c'])
-
-# st.line_chart(chart_data)
-
-# map_data = pd.DataFrame(
-#     np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-#     columns=['lat', 'lon'])
-
-# st.map(map_data)
-
-# if st.checkbox('Show dataframe',key='1'):
-#     chart_data = pd.DataFrame(
-#        np.random.randn(20, 3),
-#        columns=['a', 'b', 'c'])
-
-#     st.line_chart(chart_data)
-
-
-# option = st.selectbox(
-#     'Which number do you like best?',
-#      df['first column'],
-#      key="1")
-
-# # 'You selected: ', option
-
-
-
-# option = st.sidebar.selectbox(
-#     'Which number do you like best?',
-#      df['first column'])
-
-# 'You selected:', option
-
-# left_column, right_column = st.beta_columns(2)
-# pressed = left_column.button('Press me?')
-# if pressed:
-#     right_column.write("Woohoo!")
-
-# expander = st.beta_expander("FAQ")
-# expander.write("Here you could put in some really, really long explanations...")
-
-
-# def do_something(lower_threshold, upper_threshold):
-#     #take action here
-#     return((int(lower_threshold) + int(upper_threshold)))
-
-# lower_threshold = st.sidebar.text_input(label="Lower Threshold", value="0", key="na_lower")
-# upper_threshold = st.sidebar.text_input(label="Upper Threshold", value="100", key="na_upper")
-# st.sidebar.button(label="Submit", key="ta_submit")
-
-# st.sidebar.text('The sum is:')
-# st.sidebar.write(do_something(lower_threshold, upper_threshold))
