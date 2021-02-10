@@ -1,3 +1,8 @@
+"""
+script for streamlit web app
+
+"""
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -12,13 +17,12 @@ from sklearn.metrics import roc_curve, auc, roc_auc_score
 from sklearn.metrics import precision_score, recall_score, precision_recall_curve,f1_score, fbeta_score, log_loss
 
 
-
-
 header = st.beta_container()
 dataset = st.beta_container()
 features = st.beta_container()
 model_training = st.beta_container()
 takeaway = st.beta_container()
+
 
 with header:
     st.title('Welcome to Smart HR!')
@@ -34,14 +38,12 @@ with header:
 
 
 st.sidebar.header('Info of Candidates')
-
 st.sidebar.markdown('### Select the feature(s) you want to use for filtering!')
 
 specify = st.sidebar.selectbox('Features',
 ('All','Specify'))
 
 if specify == 'Specify':
-
 
     # Set default values
     gender_filter=['Female','Male','Other','unknown']
@@ -66,7 +68,7 @@ if specify == 'Specify':
             Female = st.sidebar.checkbox('Female',key='female')
             Male = st.sidebar.checkbox('Male',key='male')
             Other = st.sidebar.checkbox('Other',key='gender_other')
-            secret = st.sidebar.checkbox('Secret',key='gender_secret')
+            secret = st.sidebar.checkbox('Secret',value=True,key='gender_secret')
 
             gender_filter=[]
             if Female:
@@ -122,7 +124,7 @@ if specify == 'Specify':
             Graduate = st.sidebar.checkbox('Graduate',key='Graduate')
             Master = st.sidebar.checkbox('Master',key='Master')
             PhD = st.sidebar.checkbox('PhD',key='PhD')
-            secret = st.sidebar.checkbox('Secret',key='education_secret')
+            secret = st.sidebar.checkbox('Secret',value=True,key='education_secret')
 
             education_filter=[]
             if PM:
@@ -139,8 +141,8 @@ if specify == 'Specify':
                 education_filter.append('unknown')
 
     st.sidebar.header('')
-    if st.sidebar.checkbox('Current City (City Development Index)',key='city_development_index'):
-        x = st.sidebar.slider('Select a range of training hours',
+    if st.sidebar.checkbox('Current City',key='city_development_index'):
+        x = st.sidebar.slider('Select a range of city development index',
         0.5,1.0,(0.6, 0.8))  # 👈 this is a widget
         city_filter[0],city_filter[1] = x
         
@@ -156,7 +158,7 @@ if specify == 'Specify':
             PS = st.sidebar.checkbox('Public Sector',key='PS')
             Pvt = st.sidebar.checkbox('Pvt Ltd',key='Pvt')
             Other = st.sidebar.checkbox('Other',key='company_type_Other')
-            secret = st.sidebar.checkbox('Secret',key='company_type_secret')
+            secret = st.sidebar.checkbox('Secret',value=True,key='company_type_secret')
 
             company_type_filter=[]
             if ESS:
@@ -189,8 +191,8 @@ if specify == 'Specify':
             e = st.sidebar.checkbox('500-999',key='e')
             f = st.sidebar.checkbox('1000-4999',key='f')
             g = st.sidebar.checkbox('5000-9999',key='g')
-            h = st.sidebar.checkbox('10000+',key='h')
-            secret = st.sidebar.checkbox('Secret',key='company_size_secret')
+            h = st.sidebar.checkbox('10000+',value=True,key='h')
+            secret = st.sidebar.checkbox('Secret',value=True,key='company_size_secret')
 
             company_size_filter=[]
             if a:
@@ -224,7 +226,7 @@ if specify == 'Specify':
             full_time = st.sidebar.checkbox('Full time',key='full_time')
             part_time = st.sidebar.checkbox('Part time',key='part_time')
             no_enrollment = st.sidebar.checkbox('No enrollment',key='no_enrollment')
-            unknown = st.sidebar.checkbox('Unknown',key='unknown_enrollment')
+            unknown = st.sidebar.checkbox('Unknown',value=True,key='unknown_enrollment')
 
             enrolled_university_filter=[]
             if full_time:
@@ -262,7 +264,7 @@ if specify == 'Specify':
 
     st.sidebar.header('')
     if st.sidebar.checkbox('Experience (years)',key='experience'):
-        x = st.sidebar.sidebar.slider('Select a range of experience (in years)',
+        x = st.sidebar.slider('Select a range of experience (in years)',
         0,25,(5, 10))  # 👈 this is a widget
         experience_filter[0], experience_filter[1] = x
         # st.write(training_hours_filter_min)
