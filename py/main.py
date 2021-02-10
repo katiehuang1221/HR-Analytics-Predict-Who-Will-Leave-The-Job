@@ -92,7 +92,7 @@ if specify == 'Specify':
             Arts = st.sidebar.checkbox('Arts',key='Arts')
             Other = st.sidebar.checkbox('Other',key='major_other')
             No = st.sidebar.checkbox('No major',key='major_none')
-            secret = st.sidebar.checkbox('Secret',key='major_secret')
+            secret = st.sidebar.checkbox('Secret',value=True,key='major_secret')
 
             major_filter=[]
             if STEM:
@@ -241,7 +241,7 @@ if specify == 'Specify':
     st.sidebar.header('')
     if st.sidebar.checkbox('Training Hours',key='training_hours'):
         x = st.sidebar.slider('Select a range of training hours',
-        0,500,(24, 100))  # 👈 this is a widget
+        0,500,(24, 300))  # 👈 this is a widget
         training_hours_filter[0],training_hours_filter[1] = x
         # st.write(training_hours_filter_min)
 
