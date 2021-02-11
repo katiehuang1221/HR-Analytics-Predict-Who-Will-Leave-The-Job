@@ -132,3 +132,4 @@ dmypy.json
 .DS_Store
 notebook/models
 notebook/models2
+.DS_Store
