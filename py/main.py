@@ -598,6 +598,10 @@ with takeaway:
 
     final = df_test_filtered_display.merge(df,on='Enrollee ID',how='inner')
 
+    # Last clean up for display
+    final['Relevant Experience'] = final['Relevant Experience'].replace('Has relevent experience','Yes').replace('No relevent experience','No')
+
+
     st.write('Filtered number of candidates:',final.shape[0])
     st.write(final[['Enrollee ID', 'Probability (%)','Gender', 'Major',  'Education Level',
         'Current City', 'Current Company Type', 'Current Company Size',
