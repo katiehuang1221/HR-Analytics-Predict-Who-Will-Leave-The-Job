@@ -23,7 +23,7 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 ![alt text](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/img/streamllit_3.png)
 
 #### Demo
-![embed](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/streamlit_demo_fast.gif)
+![embed](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/img/streamlit_demo_fast.gif)
 
 
 ### Data
