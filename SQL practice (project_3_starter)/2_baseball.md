@@ -104,7 +104,7 @@ GROUP BY Month;
   
 #### 7. What is the effect of table join order on mean salary for the players listed in the main (master) table? *Hint:* Perform two different queries, one that joins on playerID in the salary table and other that joins on the same column in the master table. You will have to use left joins for each since right joins are not currently supported with SQLalchemy.
 
-#### Method 1: Only keep those who have salary info in salaries.
+##### Method 1: Only keep those who have salary info in salaries.
  `FROM salaries JOIN people`:
  
 ```
@@ -116,7 +116,7 @@ GROUP BY people.playerID;
 ```
 
     
-#### Method 2: Keep all the players in people (even without salary info).
+##### Method 2: Keep all the players in people (even without salary info).
  `FROM people JOIN salaries`:
  
 ```
