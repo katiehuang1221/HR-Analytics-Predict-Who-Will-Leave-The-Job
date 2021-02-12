@@ -75,8 +75,8 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 
 ### Analysis
 *Models can be found in these Jupyter Notebooks:*
-[1](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/08_refine_models_1.ipynb),
-[2](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/09_refine_models_2.ipynb).
+[Logistic Regression, kNN, Naive Bayes](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/08_refine_models_1.ipynb),
+[Tree based and others](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/09_refine_models_2.ipynb).
 #### Classification Models
 
  * Logistic Regression
