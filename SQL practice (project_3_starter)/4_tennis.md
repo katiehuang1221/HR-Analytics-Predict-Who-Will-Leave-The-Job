@@ -72,7 +72,7 @@ Do the same for the other CSV files in the *tennis* directory.
 
 This challenge uses only SQL queries. Please submit answers in a markdown file.
   
-**Details can be found in Jupyter Notebook**
+**Details can be found in the [Jupyter Notebook](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/SQL%20practice%20(project_3_starter)/tennis.ipynb).**
 
 1. Using the same tennis data, find the number of matches played by
    each player in each tournament. (Remember that a player can be
