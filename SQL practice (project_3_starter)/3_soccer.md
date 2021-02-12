@@ -27,7 +27,7 @@ df_schema.tbl_name.unique()
 
 Please complete this exercise using sqlite3 (the soccer data, above) and your Jupyter notebook.
   
-**Details are in Jupyter Notebook.**
+**Details are in [Jupyter Notebook](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/SQL%20practice%20(project_3_starter)/soccer.ipynb).**
 
 #### 1. Which team scored the most points when playing at home?  
 ```
