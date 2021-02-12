@@ -11,7 +11,7 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 
 ## Web App Access
 
-(Platform: Streamlit)
+(Platform: Streamlit) Python script can be found [here](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/py/main.py).
 * Visualization and statistics of enrollee data structure
 * Feature filters for the enrollees
 * Model performance
@@ -22,7 +22,8 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 ![alt text](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/img/streamlit_2.png)
 ![alt text](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/img/streamllit_3.png)
 
-
+#### Demo
+![embed](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/streamlit_demo_fast.gif)
 
 
 ### Data
@@ -73,6 +74,9 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 
 
 ### Analysis
+*Models can be found in these Jupyter Notebooks:*
+[1](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/08_refine_models_1.ipynb),
+[2](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/notebook/09_refine_models_2.ipynb).
 #### Classification Models
 
  * Logistic Regression
