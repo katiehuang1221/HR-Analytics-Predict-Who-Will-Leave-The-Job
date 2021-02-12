@@ -39,7 +39,7 @@ df_schema.tbl_name.unique()
 
 Please complete this exercise using SQL Lite (i.e., the Lahman baseball data, above) and your Jupyter notebook.
   
-**Details are in the Jupyter Notebook.**
+**Details are in the [Jupyter Notebook](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/SQL%20practice%20(project_3_starter)/baseball.ipynb).**
 
 #### 1. What was the total spent on salaries by each team, each year?
 
