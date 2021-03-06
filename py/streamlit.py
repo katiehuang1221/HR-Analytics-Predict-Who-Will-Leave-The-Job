@@ -29,7 +29,7 @@ with header:
     st.write('Tell me about the candidates and I will let you know if they are actually looking for a new job!\
     This will save you considerable amount of time reaching out or interviewing the candidates!')
 
-    df_temp = pd.read_csv('data/dump/df_test_altair_viz.csv')
+    df_temp = pd.read_csv('data/df_test_altair_viz.csv')
     c = alt.Chart(df_temp.iloc[:200]).mark_circle().encode(
     x=alt.X('Candidate',axis=alt.Axis(labels=False)), y='Training Hours', size='Probability', color='Current company',
     tooltip=['Probability', 'Candidate ID', 'Gender', 'Major', 'Education',
@@ -275,12 +275,12 @@ with dataset:
     st.header('Candidate Statistics')
    
 
-    df_train = pd.read_pickle('data/dump/df_train.csv')
-    df_test = pd.read_pickle('data/dump/df_test.csv')
+    df_train = pd.read_pickle('data/df_train.csv')
+    df_test = pd.read_pickle('data/df_test.csv')
 
-    X_train = pd.read_pickle('data/dump/X_adasyn')
-    y_train = pd.read_pickle('data/dump/y_adasyn')
-    X_test = pd.read_pickle('data/dump/X_test_processed')
+    X_train = pd.read_pickle('data/X_adasyn')
+    y_train = pd.read_pickle('data/y_adasyn')
+    X_test = pd.read_pickle('data/X_test_processed')
     y_test = df_test['target']
 
 
@@ -362,10 +362,10 @@ with model_training:
     st.header('Model')
 
     # Training data
-    df_test = pd.read_pickle('data/dump/df_test.csv')
-    X_train = pd.read_pickle('data/dump/X_adasyn')
-    y_train = pd.read_pickle('data/dump/y_adasyn')
-    X_test = pd.read_pickle('data/dump/X_test_processed')
+    df_test = pd.read_pickle('data/df_test.csv')
+    X_train = pd.read_pickle('data/X_adasyn')
+    y_train = pd.read_pickle('data/y_adasyn')
+    X_test = pd.read_pickle('data/X_test_processed')
     y_test = df_test['target']
 
     lm = LogisticRegression(solver='newton-cg',  # For comparison, use the same solver as statsmodels default
@@ -421,7 +421,7 @@ with model_training:
 
 
     # Candidate probability vs head count
-    df = pd.read_csv('data/dump/candidate_proba.csv')
+    df = pd.read_csv('data/candidate_proba.csv')
 
     st.markdown('### Customize Metric')
     option = st.selectbox('Select the metric you wish to use:',
