@@ -11,7 +11,10 @@ Immediate benefit for the company is reduce the time and cost for reaching out t
 
 ## Web App Access
 
-(Platform: Streamlit) Python script can be found [here](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/py/main.py).
+(Platform: Streamlit)  
+Web app can be found [here](https://share.streamlit.io/katiehuang1221/smarthr_app).  
+Python script can be found [here](https://github.com/katiehuang1221/onl_ds5_project_3/blob/main/py/main.py).
+
 * Visualization and statistics of enrollee data structure
 * Feature filters for the enrollees
 * Model performance
