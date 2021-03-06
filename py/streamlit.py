@@ -29,7 +29,7 @@ with header:
     st.write('Tell me about the candidates and I will let you know if they are actually looking for a new job!\
     This will save you considerable amount of time reaching out or interviewing the candidates!')
 
-    df_temp = pd.read_csv('data/df_test_altair_viz.csv')
+    df_temp = pd.read_csv('df_test_altair_viz.csv')
     c = alt.Chart(df_temp.iloc[:200]).mark_circle().encode(
     x=alt.X('Candidate',axis=alt.Axis(labels=False)), y='Training Hours', size='Probability', color='Current company',
     tooltip=['Probability', 'Candidate ID', 'Gender', 'Major', 'Education',
